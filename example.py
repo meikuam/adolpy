@@ -1,4 +1,3 @@
-from __future__ import division
 import adolpy
 
 # Replace the math module
@@ -24,35 +23,32 @@ def f(x,y):
 
 x,y = 3,6
 
-print "value: ", f(x,y)
+print("value: ", f(x,y))
 
 der = adolpy.derivate(f)
 
 derivative = der(x,y)
 
-print
-print "Automatic derivatives"
+print("Automatic derivatives")
 for i in derivative:
-    print i.dot
+    print(i.dot)
 
-print "Manually computed jacobian"
-print [5 * x**4 + math.sqrt(y), x/(2*math.sqrt(y))]
-print [1,1]
+print("Manually computed jacobian")
+print([5 * x**4 + math.sqrt(y), x/(2*math.sqrt(y))])
+print([1,1])
 
 step = 1e-5
-print "Numerically computed by central differences for step=", step
+print("Numerically computed by central differences for step=", step)
 
-print [(f(x+step,y)[0] - f(x-step,y)[0])/(2*step), (f(x,y+step)[0] - f(x, y-step)[0])/(2*step)]
-print [(f(x+step,y)[1] - f(x-step,y)[1])/(2*step), (f(x,y+step)[1] - f(x, y-step)[1])/(2*step)]
+print([(f(x+step,y)[0] - f(x-step,y)[0])/(2*step), (f(x,y+step)[0] - f(x, y-step)[0])/(2*step)])
+print([(f(x+step,y)[1] - f(x-step,y)[1])/(2*step), (f(x,y+step)[1] - f(x, y-step)[1])/(2*step)])
 
 
 
-print
-print "Now, a function defined by parts (huber loss), delta = 3"
-print "For a < delta, huber(a) = .5 * a**2"
-print "For a = delta, huber(a) = .5 * a**2 == delta * (abs(a) - delta/2)"
-print "For a > delta, huber(a) = delta * (abs(a) - delta/2)"
-print
+print("Now, a function defined by parts (huber loss), delta = 3")
+print("For a < delta, huber(a) = .5 * a**2")
+print("For a = delta, huber(a) = .5 * a**2 == delta * (abs(a) - delta/2)")
+print("For a > delta, huber(a) = delta * (abs(a) - delta/2)")
 
 # Trying with closures
 def huber(delta):
@@ -69,23 +65,17 @@ loss = huber(delta)
 huber_der = adolpy.derivate(loss)
 
 params = [-6, -3.00001, -2.9999, 0, 2.99999, 3, 3.00001, 6]
-print "Automatic derivative for a = ", params 
+print("Automatic derivative for a = ", params)
 for a in params:
-    print huber_der(a).dot[0], 
-print
+    print(huber_der(a).dot[0])
 
-print "Actual derivatives: -delta if a =< -delta, a if -delta <= a <= delta, delta if a >= delta"
+print("Actual derivatives: -delta if a =< -delta, a if -delta <= a <= delta, delta if a >= delta")
 for a in params:
     if abs(a) < delta:
-        print a,
+        print(a)
     else:
-        print a/abs(a)*delta,
-print
+        print(a/abs(a)*delta)
 
-print "Numerical derivatives, step = ", step
+print("Numerical derivatives, step = ", step)
 for a in params:
-    print (loss(a+step) - loss(a-step))/(2*step),
-
-
-print 
-print
+    print((loss(a+step) - loss(a-step))/(2*step))

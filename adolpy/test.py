@@ -20,7 +20,7 @@
 
 
 import adolpy
-import adolmath
+import adolpy.adolmath
 
 def log(x):
     return adolmath.log(x)
@@ -28,4 +28,4 @@ def log(x):
 dlog = adolpy.derivate(log)
 
 #print log(2.0), dlog(2.0)
-print repr(dlog(0)), repr(dlog(-1))
+print(repr(dlog(0)), repr(dlog(-1)))

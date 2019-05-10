@@ -27,7 +27,6 @@ Common definitions for adolmath.
 import math
 import itertools
 import operator
-from itertools import izip
 
 inf, nan = float('inf'), float('nan')
 zeros = itertools.repeat(0)
@@ -59,7 +58,7 @@ class Active(object):
         res = getvalue(res)
         return res
     def getvalue(self):
-        if hasattr(self.value,"getvalue"):
+        if hasattr(self.value, "getvalue"):
             return self.value.getvalue()
         else:
             return self.value
@@ -71,7 +70,7 @@ class Active(object):
         return hash(self.value)
 
 def getvalue(act):
-    if hasattr(act,"value"):
+    if hasattr(act, "value"):
         return getvalue(act.value)
     else:
         return act        
@@ -115,11 +114,12 @@ def active_operator(derivative):
     def active_operation(x, y):
         xval, xdot = unpack_val_dot(x)
         yval, ydot = unpack_val_dot(y)
+        print('active_operation', xval, yval)
         return Active(op(xval, yval),
-                      tuple(derivative(xval,yval, dotx, doty) for dotx, doty in izip(xdot,ydot)))
+                      tuple(derivative(xval, yval, dotx, doty) for dotx, doty in zip(xdot,ydot)))
     def reverse_operation(y, x): # El mismo codigo anterior... 
         return active_operation(x, y)
-    setattr(Active, "__%s__"%name, types.MethodType(active_operation, None, Active))
-    setattr(Active, "__r%s__"%name, types.MethodType(reverse_operation, None, Active))
+    setattr(Active, "__%s__"%name, types.MethodType(active_operation, Active))
+    setattr(Active, "__r%s__"%name, types.MethodType(reverse_operation, Active))
     return active_operation
 

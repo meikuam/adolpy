@@ -30,5 +30,5 @@ __status__ = "Development"
 __url__ = "https://github.com/zarrabeitia/adolpy"
 
 from .adolpy import derivate
-from common import Active
-import admath as math
+from adolpy.common import Active
+# import admath as math

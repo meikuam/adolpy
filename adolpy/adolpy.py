@@ -21,11 +21,11 @@
 #       MA 02110-1301, USA.
 
 
-from itertools import cycle, izip
+from itertools import cycle
 import operator
-from common import Active, inf, nan, zeros, active_operator                       
+from adolpy.common import Active, inf, nan, zeros, active_operator                       
    
-@active_operator        
+@active_operator
 def mul(x, y, dotx, doty):
     return x * doty + y * dotx 
 
@@ -38,7 +38,7 @@ def sub(x, y, dotx, doty):
     return dotx - doty
 
 @active_operator
-def div(x, y, dotx, doty):
+def truediv(x, y, dotx, doty):
     num = (y*dotx - x*doty)
     if y == 0:
         if num < 0:
@@ -50,7 +50,7 @@ def div(x, y, dotx, doty):
     else:
         return (y*dotx - x*doty)/(y*y)
 
-from admath import pow
+# from admath import pow
 
 
 def makevar(arg, pos, dim):
@@ -102,7 +102,7 @@ def derivate(func, directions=None):
         if not directions:
             args = (makevar(arg, pos, dim) for pos,arg in enumerate(args))
         else:             
-            args = (Active(arg,tuple(v)) for arg,v in izip(args,directions))
+            args = (Active(arg,tuple(v)) for arg,v in zip(args,directions))
                         
         res = func(*args)
         if isinstance(res, tuple):
@@ -124,10 +124,10 @@ if __name__ == "__main__":
         return p(x)+y,0
                 
     funcs = testfunc, derivate(testfunc, directions=[(0,1),(1,0)]), derivate(derivate(testfunc, directions=[(2,2)]))
-    for i in xrange(-1,10):
-        print "x=",i        
-        print "testfunc",testfunc(i,2)
-        print "derivs",funcs[1](i,-2)
+    for i in range(-1,10):
+        print("x=", i)        
+        print("testfunc",testfunc(i,2))
+        print("derivs",funcs[1](i,-2))
     
     #print funcs[1](i,2)[0]
     

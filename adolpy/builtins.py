@@ -1,9 +1,9 @@
 
-from common import active_function, active_operator, inf, nan, Active
+from adolpy.common import active_function, active_operator, inf, nan, Active
 
-import __builtin__
+import builtins
 
-@active_function(__builtin__)
+@active_function(builtins)
 def abs(x):
     if x > 0:
         return 1

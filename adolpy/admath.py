@@ -1,7 +1,7 @@
 
 import math
 from math import pi, e
-from common import active_function, active_operator, inf, nan, Active
+from adolpy.common import active_function, active_operator, inf, nan, Active
 
 
 
